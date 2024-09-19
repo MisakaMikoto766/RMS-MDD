@@ -3,7 +3,7 @@
 This is the code repository for the paper "RMS-MDD: A Comprehensive Benchmark for Medical Dialogue Diagnosis
 in Real-World Medical Scenarios"
 
-<img src="./img/models.png" alt="image-20240918192327414" style="zoom:80%;" />
+<img src="https://s2.loli.net/2024/09/19/ZR5L4XBMvcxHW1z.png" alt="models.png" style="zoom:80%;" />
 
 ## 📝Prepare the environment
 
