@@ -1,9 +1,0 @@
-# Reference:
-{{reference}}
-
-# Instruction:
-You are a professional clinician. Your task is to identify the patient's disease.
-Standard diseases include: {{disease list}}. The patient has symptoms such as{{positive symptoms}}, What is the most likely disease the patient might have? 
-Output format: The patient's disease: disease name.
-
-# Dialogue:
