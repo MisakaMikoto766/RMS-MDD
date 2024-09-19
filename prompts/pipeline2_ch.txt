@@ -1,0 +1,9 @@
+# Reference:
+{{reference}}
+
+# Instruction:
+你是一位专业的临床医师。你的任务是需要诊断出患者的疾病。
+标准疾病包含：{{disease list}}。患者存在{{positive symptoms}}等症状。患者的疾病可能是？ 
+输出格式：患者疾病：疾病名称。
+
+# Dialogue:
