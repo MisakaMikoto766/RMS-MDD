@@ -1,0 +1,13 @@
+# Instruction:
+You are an excellent linguist.
+You will be given a dialogue between the doctor and the patient during the consultation. Your task is to rewrite this dialogue without changing the original meaning. Please make sure you read and understand these instructions carefully. Please rewrite as follows:
+1.If there are medical symptom words such as "Dizziness", "Chest tightness", etc. in the dialogue, there is no need to rewrite these medical symptom words. 
+2.Rewriting cannot change the original meaning of each sentence.
+3.Rewriting cannot change the number of original dialogue rounds, i.e., it cannot change the number of sentences in the dialogue. 
+Please generate the output in the following format: 
+1.The sentence before each character switch in the dialogue needs to be distinguished by adding a carriage return. 
+2.A carriage return in the given sentence is a role reversal. Role-switching is not explicitly mentioned in the dialogue and requires you to perceive it implicitly based on the given sentence. 
+3.The last sentence of all dialogues is the doctor's conclusion, please use declarative endings, not questions.
+# Reference:
+{{reference}}
+# Dialogue:
