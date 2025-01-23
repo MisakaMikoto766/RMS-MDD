@@ -1,9 +1,10 @@
 # RMS-MDD
 
-This is the code repository for the paper "RMS-MDD: A Comprehensive Benchmark for Medical Dialogue Diagnosis
-in Real-World Medical Scenarios"
-
-<img src="https://s2.loli.net/2024/09/19/ZR5L4XBMvcxHW1z.png" alt="models.png" style="zoom:80%;" />
+This is the code repository for the paper "Towards More Realistic Medical Dialogue Diagnosis with New Benchmark and Symptom-Prompt Diagnostic Model"
+Framework:
+<img src="./img/models.png" alt="image-20240918192327414" style="zoom:80%;" />
+SPD model:
+<img src="./img/new_models.png" alt="image-20240918192327415" style="zoom:80%;" />
 
 ## 📝Prepare the environment
 
