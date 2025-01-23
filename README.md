@@ -3,10 +3,10 @@
 This is the code repository for the paper "Towards More Realistic Medical Dialogue Diagnosis with New Benchmark and Symptom-Prompt Diagnostic Model"
 
 Framework:
-<img src="https://tutu.to/image/h6IUm" alt="image-20240918192327414" style="zoom:80%;" />
+<img src="https://t.tutu.to/img/h6IUm" alt="image-20240918192327414" style="zoom:80%;" />
 
 SPD model:
-<img src="https://tutu.to/image/h6NpX" alt="image-20240918192327415" style="zoom:80%;" />
+<img src="https://t.tutu.to/img/h6NpX" alt="image-20240918192327415" style="zoom:80%;" />
 
 ## 📝Prepare the environment
 
