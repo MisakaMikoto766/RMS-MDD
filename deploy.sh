@@ -17,3 +17,5 @@ swift deploy \
   --model_id_or_path $MODEL_ID_OR_PATH \
   --do_sample True \
   --temperature 0.3
+
+
