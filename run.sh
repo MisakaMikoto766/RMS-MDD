@@ -9,3 +9,5 @@ DATASET_FILE=$1
 OUTPUT_FILE=$2
 
 python ./models/inference.py --dataset_file "$DATASET_FILE" --output_file "$OUTPUT_FILE"
+
+
