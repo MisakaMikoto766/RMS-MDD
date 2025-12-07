@@ -1,0 +1,1 @@
+We use the top one to three examples from the training set as few-shot prompts and insert them into the {{reference}} field.
