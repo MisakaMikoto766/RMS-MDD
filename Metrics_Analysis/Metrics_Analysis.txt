@@ -1,0 +1,31 @@
+Example 1: Perfect prediction
+If all symptoms and their corresponding attributes are correctly identified and the disease label is also predicted correctly, for example
+True symptoms: {(fever, positive), (cough, negative)}
+Predicted symptoms: {(fever, positive), (cough, negative)}
+True disease: influenza
+Predicted disease: influenza
+then both the symptom match and disease match indicators are equal to one and the Csdm-Score for this sample is one.
+Example 2: Minimal error
+If any symptom attribute is incorrect or the disease label is incorrect, for example
+True symptoms: {(fever, positive), (cough, negative)}
+Predicted symptoms: {(fever, uncertain), (cough, negative)}
+or
+True disease: influenza
+Predicted disease: pneumonia
+then either the symptom match or the disease match indicator becomes zero and the Csdm-Score for this sample is zero.
+For Sdm-Score, we provide intuitive examples showing how the metric rewards partial correctness.
+Example 3: Partial symptom correctness with correct disease
+If a dialogue contains four true symptoms and a model predicts three of them correctly and also predicts the correct disease, then the Sdm-Score for this sample is
+3 divided by 4 equals 0.75.
+Example 4: Partial symptom correctness with incorrect disease
+Using the same symptom prediction as above but with an incorrect disease label, the penalty factor alpha is applied. If alpha equals 0.5, then the Sdm-Score becomes
+0.5 multiplied by (3 divided by 4) equals 0.375.
+We also include a sensitivity analysis to better illustrate the behavior of both metrics.
+Sensitivity to symptom accuracy
+When the disease label is fixed as correct, Csdm-Score equals one only when all symptoms are predicted correctly. If any symptom or attribute is incorrect, the Csdm-Score becomes zero. This shows that Csdm-Score is maximally sensitive to symptom recognition errors.
+In contrast, Sdm-Score decreases proportionally with the number of incorrectly predicted symptoms, which means it provides a gradual penalty and therefore reflects partial correctness.
+Sensitivity to disease accuracy
+We fix symptom correctness at three out of four symptoms.
+If the disease is predicted correctly, Sdm-Score equals 0.75.
+If the disease is incorrect, Sdm-Score becomes 0.5 multiplied by 0.75 which equals 0.375.
+Meanwhile, Csdm-Score drops from one to zero when the disease label is incorrect. This comparison highlights that Csdm-Score is extremely sensitive to disease errors while Sdm-Score provides a more graded response.
