@@ -1,0 +1,70 @@
+Dialog:    
+{
+        "self_repo": "I have Anorexia, Doctor: ?",
+        "dialog": [
+            "I have been experiencing Anorexia.",
+            "Given that, have you noticed any Constipation?",
+            "Yes, I do have that issue sometimes.",
+            "And how about Fatigue?",
+            "That's a common occurrence for me.",
+            "Based on your symptoms, it seems you might be dealing with Thyroiditis."
+        ],
+        "disease_tag": "Thyroiditis",
+        "goal": {
+            "implicit_inform_slots": {
+                "Constipation": true,
+                "Fatigue": true
+            },
+            "explicit_inform_slots": {
+                "Anorexia": true
+            }
+        }
+    },
+
+Knowledge: 
+Constipation: 
+Constipation, Constipation is a common gastrointestinal condition characterized by infrequent, difficult, or painful bowel movements. It occurs when stool moves too slowly through the digestive tract, resulting in hard and dry stools. Multiple factors can contribute to constipation, including a low-fiber diet, inadequate water intake, lack of physical activity, and ignoring the urge to have a bowel movement. Certain medications and medical conditions like irritable bowel syndrome (IBS), hypothyroidism, or diabetes can also be associated with constipation. Managing constipation often involves dietary and lifestyle changes, such as increasing fiber and water intake, regular exercise, and sometimes using laxatives under medical supervision. Chronic constipation may need further medical evaluation to rule out underlying health issues.
+
+  {
+    "symptom": "Constipation",
+    "article_title": "Probiotics and constipation: mechanisms of action, evidence for effectiveness and utilisation by patients and healthcare professionals.",
+    "article_abstract": "The aim of this narrative review is to assess and present evidence on the mechanisms of action of probiotics in constipation, their effectiveness and their utilisation by patients and healthcare professionals. Chronic constipation is a common bothersome disorder that has a considerable impact on patients' quality of life. Probiotics have been increasingly investigated for their effectiveness in various disorders, including chronic constipation. Probiotics may affect gut motility and constipation through their impact on the gut microbiota and fermentation, the central and enteric nervous system and the immune system. However, evidence for the effectiveness of probiotics in the management of constipation remains varied, with some strains demonstrating improvements, while others show no effect. Despite the uncertainty in evidence and the fact that the majority of healthcare professionals do not recommend probiotics for constipation, an increased prevalence of probiotic use by people with constipation has been shown. Therefore, there is a need for public health strategies to inform the public about where strong evidence of probiotic effectiveness exist, and where evidence is still weak. Education of healthcare professionals on the increased utilisation of probiotics for constipation by the public and on current evidence for the effectiveness of specific strains is also required.",
+    "pub_date": {
+      "year": "2019",
+      "month": "07",
+      "day": "02"
+    }
+  },
+  {
+    "symptom": "Constipation",
+    "article_title": "Idiopathic Slow Transit Constipation: Pathophysiology, Diagnosis, and Management.",
+    "article_abstract": "Slow transit constipation (STC) has an estimated prevalence of 2-4% of the general population, and although it is the least prevalent of the chronic constipation phenotypes, it more commonly causes refractory symptoms and is associated with significant psychosocial stress, poor quality of life, and high healthcare costs. This review provides an overview of the pathophysiology, diagnosis, and management options in STC. STC occurs due to colonic dysmotility and is thought to be a neuromuscular disorder of the colon. Several pathophysiologic features have been observed in STC, including reduced contractions on manometry, delayed emptying on transit studies, reduced numbers of interstitial cells of Cajal on histology, and reduced amounts of excitatory neurotransmitters within myenteric plexuses. The underlying aetiology is uncertain, but autoimmune and hormonal mechanisms have been hypothesised. Diagnosing STC may be challenging, and there is substantial overlap with the other clinical constipation phenotypes. Prior to making a diagnosis of STC, other primary constipation phenotypes and secondary causes of constipation need to be ruled out. An assessment of colonic transit time is required for the diagnosis and can be performed by a number of different methods. There are several different management options for constipation, including lifestyle, dietary, pharmacologic, interventional, and surgical. The effectiveness of the available therapies in STC differs from that of the other constipation phenotypes, and prokinetics often make up the mainstay for those who fail standard laxatives. There are few available management options for patients with medically refractory STC, but patients may respond well to surgical intervention. STC is a common condition associated with a significant burden of disease. It can present a clinical challenge, but a structured approach to the diagnosis and management can be of great value to the clinician. There are many therapeutic options available, with some having more benefits than others.",
+    "pub_date": {
+      "year": "2024",
+      "month": "01",
+      "day": "06"
+    }
+  },
+
+Baseline Model Output (ZY-BERT): "Anorexia": true; "Fatigue": true
+SPD Model Output: "Anorexia": true; "Fatigue": true; "Constipation": true
+
+Analysis: 
+We have added a qualitative example to illustrate how SPD improves performance, especially for rare and clinically specific symptoms.
+One representative case involves the symptom “Constipation”, which appears only 12 times in the training set, corresponding to a ratio of 0.0064. Because this symptom is relatively rare and medically complex, models trained only on dialogue data tend to underutilize it. The following example illustrates this challenge:
+Self-report: “I have been experiencing Anorexia.”
+Dialogue: the doctor queries Constipation and Fatigue, with the patient confirming both.
+Gold label: Thyroiditis
+Symptom labels:
+explicit: {Anorexia: true}
+implicit: {Constipation: true, Fatigue: true}
+Although Constipation is clinically meaningful in endocrine and metabolic disorders, its low frequency in the dataset makes it difficult for baseline models to correctly integrate it into disease reasoning. Retrieval augmentation helps SPD overcome this limitation. When constructing positive-symptom queries (e.g., “The patient has Constipation”), SPD retrieves external medical knowledge describing the mechanisms, causes, and clinical contexts of Constipation, provided that Qwen successfully extracts the symptom, such as:
+"Constipation is a common gastrointestinal condition characterized by infrequent or difficult bowel movements… it may be associated with conditions such as hypothyroidism or diabetes…"
+"Chronic constipation can be related to gut motility disorders, neuromuscular dysfunction, hormonal imbalance, or metabolic diseases…"
+These retrieved passages explicitly connect Constipation to endocrine disorders, providing medically grounded information that is not easily learned from the small number of occurrences in the training data. This contextual knowledge helps SPD correctly interpret that the combination of Anorexia, Constipation, and Fatigue is consistent with Thyroiditis, thereby improving diagnostic reliability.
+To further illustrate the impact of retrieval augmentation, we compare the outputs of SPD and other baseline models on this case:
+Baseline Model Output (ZY-BERT): "Anorexia": true; "Fatigue": true
+SPD Model Output: "Anorexia": true; "Fatigue": true; "Constipation": true
+Importantly, retrieval augmentation is not the only factor contributing to improved performance. The dynamic symptom-aware learning (DSL) mechanism and our loss design also help mitigate the difficulty posed by low-frequency symptoms by adjusting learning emphasis according to prediction difficulty and data imbalance. Together, retrieval augmentation and DSL produce robust improvements in rare-symptom scenarios and ambiguous clinical conversations.
+To further understand the limitations of SPD, we conducted an additional error analysis on 200 misclassified dialogues. The observed errors can be grouped into three main categories. First, multi-label symptom prediction remains challenging. Because multiple symptoms may co-occur in a single dialogue, the model sometimes omits relevant symptoms or predicts symptoms that are not mentioned. Second, the model occasionally misclassifies symptom states. In these cases, the symptom name is identified correctly, but the binary state (for example true or false) is incorrect, which disrupts downstream diagnostic reasoning. Third, long-tail misclassification remains a persistent issue. Although SPD integrates retrieval augmentation and the dynamic symptom-aware learning mechanism, low-frequency symptoms and diseases are still more likely to be incorrectly classified as more common categories due to data imbalance.
+We also examined high-risk or clinically sensitive errors. The most dangerous failures occur when the predicted disease is incorrect in a way that could lead to inappropriate or delayed treatment. For example, misclassifying Thyroiditis as Dermatitis could cause the true condition to be overlooked, posing potential risks to patient safety. These findings highlight the need for future work to enhance the robustness of SPD, particularly for rare symptoms, ambiguous conversations, and safety-critical diagnostic decisions.
