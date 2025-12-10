@@ -1,0 +1,10 @@
+Retrieval depth: We examined the effect of different top k values in the retrieval module.
+k = 1: Disease Accuracy 88.46 Precision 89.74 Recall 75.96 F1-score 82.28 Csdm-Score 14.42 Sdm-Score 69.01
+k = 3: Disease Accuracy 90.38 Precision 90.97 Recall 84.43 F1-score 87.04 Csdm-Score 21.15 Sdm-Score 74.53
+k = 5: Disease Accuracy 91.35 Precision 90.91 Recall 82.83 F1-score 86.68 Csdm-Score 21.15 Sdm-Score 73.82
+k = 7: Disease Accuracy 89.42 Precision 88.53 Recall 77.98 F1-score 82.92 Csdm-Score 15.38 Sdm-Score 69.78
+Prompt design: When the symptom-state representation was changed from {Negative, Uncertain, Positive, Blank} to {–1, 0, 1, 2}, the performance decreased.
+Disease Accuracy 91.35 Precision 90.45 Recall 76.57 F1-score 82.93 Csdm-Score 17.31 Sdm-Score 70.22
+Loss function: Removing the DSL loss resulted in a clear decline in both symptom recognition and diagnostic accuracy.
+Disease Accuracy 89.42 Precision 89.79 Recall 78.18 F1-score 83.59 Csdm-Score 14.42 Sdm-Score 69.78
+These findings demonstrate that each component of SPD contributes meaningfully to overall performance. Retrieval with three to five passages provides the best balance between information richness and noise. Structured symptom-state prompts improve grounding and reduce ambiguity. The DSL loss is important for addressing long-tail symptoms and maintaining diagnostic consistency.
