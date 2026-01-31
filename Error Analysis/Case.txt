@@ -68,3 +68,17 @@ SPD Model Output: "Anorexia": true; "Fatigue": true; "Constipation": true
 Importantly, retrieval augmentation is not the only factor contributing to improved performance. The dynamic symptom-aware learning (DSL) mechanism and our loss design also help mitigate the difficulty posed by low-frequency symptoms by adjusting learning emphasis according to prediction difficulty and data imbalance. Together, retrieval augmentation and DSL produce robust improvements in rare-symptom scenarios and ambiguous clinical conversations.
 To further understand the limitations of SPD, we conducted an additional error analysis on 200 misclassified dialogues. The observed errors can be grouped into three main categories. First, multi-label symptom prediction remains challenging. Because multiple symptoms may co-occur in a single dialogue, the model sometimes omits relevant symptoms or predicts symptoms that are not mentioned. Second, the model occasionally misclassifies symptom states. In these cases, the symptom name is identified correctly, but the binary state (for example true or false) is incorrect, which disrupts downstream diagnostic reasoning. Third, long-tail misclassification remains a persistent issue. Although SPD integrates retrieval augmentation and the dynamic symptom-aware learning mechanism, low-frequency symptoms and diseases are still more likely to be incorrectly classified as more common categories due to data imbalance.
 We also examined high-risk or clinically sensitive errors. The most dangerous failures occur when the predicted disease is incorrect in a way that could lead to inappropriate or delayed treatment. For example, misclassifying Thyroiditis as Dermatitis could cause the true condition to be overlooked, posing potential risks to patient safety. These findings highlight the need for future work to enhance the robustness of SPD, particularly for rare symptoms, ambiguous conversations, and safety-critical diagnostic decisions.
+
+We further present a concrete example illustrating errors caused by incorrect symptom extraction in the PreGen module based on Qwen.
+Dialogue summary: The patient reports low-grade fever, persistent crying, and leg pain.
+Gold symptom annotations:
+Explicit: {low-grade fever: true, crying: true}
+Implicit: {limb pain: true}
+Automatic symptom generation (PreGen):
+Extracted symptoms: {low-grade fever: true, crying: true}
+Missing symptom: limb pain (leg pain not mapped to the standardized category).
+Downstream impact:
+Retrieval augmentation is triggered only for the incomplete symptom set, leading to missing retrieval of pain-related knowledge and omission of the implicit symptom in downstream prediction.
+Comparison:
+A baseline model (ZY-BERT) correctly identifies the complete symptom set in this case.
+This example clearly demonstrates that although the PreGen module improves overall symptom recall, extraction errors, especially failures to normalize colloquial expressions to standardized symptom categories, can propagate through the retrieval and diagnosis stages and introduce error risks in the pipeline framework. 
